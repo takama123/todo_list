@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Todo_list</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="list_mission">Xem các loại danh sách</string>
+    <string name="add_mission">Thêm mới nhiệm vụ</string>
+    <string name="setting">Cài đặt</string>
+    <string name="search">Search</string>
+    <string name="text_add_mission_1">Bạn sẽ thực hiện điều gì ?</string>
+    <string name="hint_add_mission_1">Nhiệm vụ nhập đây</string>
+    <string name="text_add_mission_2">Ngày giờ hết hạn</string>
+    <string name="text_add_mission_3">Thêm vào danh sách</string>
+    <string name="hint_add_mission_2">Ngày hết hạn</string>
+    <string name="hint_add_mission_3">Giờ hết hạn</string>
+    <string name="add_type">Thêm mới kiểu nhiệm vụ</string>
+</resources>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="10dp"
+    android:layout_marginRight="15dp"
+    android:paddingTop="30dp">
+
+    <TextView
+        android:id="@+id/textview1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/text_add_mission_1"
+        android:textSize="15dp"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"/>
+    <EditText
+        android:id="@+id/edNhiemVu"
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:hint="@string/hint_add_mission_1"
+        android:drawableRight="@mipmap/target"
+        android:gravity="center_vertical"
+        />
+    <TextView
+        android:id="@+id/textview2"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/text_add_mission_2"
+        android:textSize="15dp"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/tvNgayHethan"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:hint="@string/hint_add_mission_2"
+        android:drawableRight="@mipmap/datepicker"
+        />
+
+    <TextView
+        android:id="@+id/tvGioHetHan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginTop="10dp"
+        android:drawableRight="@mipmap/time"
+        android:visibility="gone"
+        android:hint="@string/hint_add_mission_3"
+
+        />
+    <TextView
+        android:id="@+id/textview3"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/text_add_mission_3"
+        android:textSize="15dp"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        />
+
+    <Spinner
+        android:id="@+id/spinnerDanhSach"
+        android:layout_width="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="10dp">
+        <ImageButton
+            android:id="@+id/btnAddMission"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/btnadd"
+            android:src="@mipmap/tick"
+            android:scaleType="fitXY"
+            />
+
+    </RelativeLayout>
+</LinearLayout>
