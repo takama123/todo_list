@@ -17,11 +17,6 @@ import static com.example.pc.todo_list.database.DatabaseHandler.MissionColumn.KE
 import static com.example.pc.todo_list.database.DatabaseHandler.MissionColumn.KEY_TIME;
 import static com.example.pc.todo_list.database.DatabaseHandler.TABLE_MISSION;
 
-
-/**
- * Created by Mac on 1/5/17.
- */
-
 public class MissionDAO {
 
     Context context;
@@ -71,6 +66,27 @@ public class MissionDAO {
         Cursor cursor = db.query(TABLE_MISSION, new String[] { DatabaseHandler.MissionColumn._ID,
                         KEY_NAME, KEY_DATE, KEY_TIME, KEY_ID_LIST, KEY_STATUS }, KEY_ID_LIST + "=?",
                 new String[] { String.valueOf(id_list) }, null, null, null, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Mission mission = new Mission(cursor.getInt(0),cursor.getString(3), cursor.getInt(4),
+                        cursor.getString(2), cursor.getInt(5), cursor.getString(1));
+                // Adding contact to list
+                missionList.add(mission);
+            } while (cursor.moveToNext());
+        }
+        // return contact list
+        return missionList;
+    }
+
+    public List<Mission> getAllMissionExceptFinish() {
+        List<Mission> missionList = new ArrayList<Mission>();
+        // Select All Query
+        SQLiteDatabase db = databaseHandler.getWritableDatabase();
+        Cursor cursor = db.query(TABLE_MISSION, new String[] { DatabaseHandler.MissionColumn._ID,
+                        KEY_NAME, KEY_DATE, KEY_TIME, KEY_ID_LIST, KEY_STATUS }, KEY_ID_LIST + "!=?",
+                new String[] {"2"}, null, null, null, null);
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {

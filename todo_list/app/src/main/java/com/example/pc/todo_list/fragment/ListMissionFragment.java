@@ -37,12 +37,12 @@ public class ListMissionFragment extends Fragment implements ListMissionAdapter.
         String list_name = getArguments().getString("list_name"); //get list_name
         // get list mission
         ArrayList<Mission> listMissionByIdType = (ArrayList<Mission>) getArguments().get("listMission");
-//        listMissionByIdType.sort();
+
+        //set
         if(listMissionByIdType.size()!=0) {
             ListMissionAdapter adapter = new ListMissionAdapter(container.getContext(), listMissionByIdType);
             adapter.setItemClick(this);
             RecyclerView.LayoutManager lm = new LinearLayoutManager(getContext());
-//            new LinearLayoutManager(container.getContext(), LinearLayoutManager.VERTICAL, false);
             recyclerView.setLayoutManager(lm);
             recyclerView.setAdapter(adapter);
             recyclerView.setVisibility(View.VISIBLE);
@@ -57,8 +57,7 @@ public class ListMissionFragment extends Fragment implements ListMissionAdapter.
 
     @Override
     public void checkBoxClick(int id_mission) {
-        Log.d("Yen","checkBox");
-
+        Log.d("Yen","checkBox"+" idmission:"+id_mission);
     }
 
     @Override

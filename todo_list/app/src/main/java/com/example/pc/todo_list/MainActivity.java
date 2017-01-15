@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.example.pc.todo_list.adapter.SpinnerToolbarAdapter;
+import com.example.pc.todo_list.bean.CompareByDate;
 import com.example.pc.todo_list.bean.Mission;
 import com.example.pc.todo_list.bean.TypeList;
 import com.example.pc.todo_list.database.MissionDAO;
@@ -24,6 +25,7 @@ import com.example.pc.todo_list.database.TypeListDAO;
 import com.example.pc.todo_list.fragment.ListMissionFragment;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -110,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Log.d("TEST", "tao moi du lieu");
             TypeList t = new TypeList(1, "Mặc định");
             typeListDAO.addType(t);
-            typeListDAO.addType(new TypeList(2, "Nhiem vu ngay"));
+            typeListDAO.addType(new TypeList(0, "Kết thúc"));
         }
         arraySpinnerToolBar = (ArrayList<TypeList>) typeListDAO.getAllType();
 
@@ -127,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         spinnerToolbar.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                //reload list by type
                 setListMission();
             }
 
@@ -151,15 +153,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void setListMission() {
+
         fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
         // get listMission
         TypeList typeList = ((TypeList) spinnerToolbar.getSelectedItem());
         arrayMisson = (ArrayList<Mission>) missionDAO.getListMissonByIdTypeList(typeList.getId());
+
+        // sap xep theo date time
+        Collections.sort(arrayMisson,new CompareByDate());
+//        for (Mission m: arrayMisson
+//             ) {
+//            Log.d("test",m.getM_ten_nhiem_vu()+" :: "
+//                    +"month:"+m.convertToCalendar().getTime().getMonth()+" :"
+//                    +"day:"+m.convertToCalendar().getTime().getDate()+" :"
+//                    +"hour:"+m.convertToCalendar().getTime().getHours()+" :"
+//                    +"minute:"+m.convertToCalendar().getTime().getMinutes()+" :"
+//            );
+//
+//        }
+        // display
         Bundle b = new Bundle();
         b.putParcelableArrayList("listMission", arrayMisson);
         b.putString("list_name", typeList.getKieu_danh_sach());
-        //display list mission
+        //
         fr = new ListMissionFragment();
         fr.setArguments(b);
         ft.replace(R.id.frameListMission, fr, "fr1");
@@ -174,3 +191,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
     }
 }
+
