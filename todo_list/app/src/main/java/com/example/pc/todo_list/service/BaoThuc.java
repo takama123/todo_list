@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.example.pc.todo_list.bean.CompareByDate;
 import com.example.pc.todo_list.bean.Mission;
+import com.example.pc.todo_list.database.MissionDAO;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -21,32 +22,37 @@ import static android.content.Context.ALARM_SERVICE;
  */
 
 public class BaoThuc {
-    Context context;
+    private static BaoThuc instance = null;
+
 //    Mission mission;
-    ArrayList<Mission> arrMission;
     private PendingIntent pendingIntent;
 
-    public BaoThuc(Context context, ArrayList<Mission> arrMission) {
-        this.context = context;
-        this.arrMission = arrMission;
+    private BaoThuc(){
     }
 
-    public void baothuc() {
-        if (arrMission.size() == 0) {
+    public static BaoThuc getInstance(){
+        if(instance == null){
+            instance = new BaoThuc();
+        }
+        return instance;
+    }
+
+    public void baothuc(Context context) {
+        MissionDAO missionDAO = new MissionDAO(context);
+        ArrayList<Mission> allMission = (ArrayList<Mission>) missionDAO.getAllMissionExceptFinish();
+        if (allMission.size() == 0) {
             Log.d("test", "allMision size = 0 ::addmissionfragment");
         } else {
-            Collections.sort(arrMission, new CompareByDate());
-            for (Mission m : arrMission) {
-                Log.d("test","."+m.getM_ngay_het_han()+".");
+            Collections.sort(allMission, new CompareByDate());
+            for (Mission m : allMission) {
                 if (!m.getM_ngay_het_han().equalsIgnoreCase("")) {
-                    Log.d("test",m.get_id()+":id");
-                    setArlarm(m);
+                    setArlarm(context,m);
                     break;
                 }
             }
         }
     }
-    public void setArlarm(Mission mission){
+    public void setArlarm(Context context,Mission mission){
         Log.d("test", "reset alarm: " + mission.getM_ten_nhiem_vu());
         Bundle bundle = new Bundle();
         bundle.putParcelable("mission",mission);
@@ -55,12 +61,10 @@ public class BaoThuc {
 
         //set alarm
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(ALARM_SERVICE);
-//        alarmManager.cancel(pendingIntent);// huy bao thuc co truoc
-
         // tao moi bao thuc
         Intent alertIntent = new Intent(context, AlarmReceiver.class);
         alertIntent.putExtras(bundle);
-        pendingIntent = PendingIntent.getBroadcast(context, 0, alertIntent, 0);
+        pendingIntent = PendingIntent.getBroadcast(context, 1, alertIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
 
     }

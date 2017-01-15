@@ -15,8 +15,6 @@ import com.example.pc.todo_list.R;
 import com.example.pc.todo_list.bean.Mission;
 import com.example.pc.todo_list.database.MissionDAO;
 
-import java.util.ArrayList;
-
 public class AlarmService extends IntentService {
     private NotificationManager alarmNotificationManager;
     Mission mission = null;
@@ -59,10 +57,7 @@ public class AlarmService extends IntentService {
     @Override
     public void onDestroy() {
         Log.d("test","destroy");
-        MissionDAO mDao = new MissionDAO(getApplicationContext());
-        ArrayList<Mission> arrMission = (ArrayList<Mission>) mDao.getAllMissionExceptFinish();
-        new BaoThuc(getApplicationContext(),arrMission).baothuc();
+        BaoThuc.getInstance().baothuc(getApplicationContext());
         super.onDestroy();
-
     }
 }
