@@ -39,6 +39,7 @@ public class ListMissionFragment extends Fragment implements ListMissionAdapter.
         ArrayList<Mission> listMissionByIdType = (ArrayList<Mission>) getArguments().get("listMission");
 
         //set
+        ///
         if(listMissionByIdType.size()!=0) {
             ListMissionAdapter adapter = new ListMissionAdapter(container.getContext(), listMissionByIdType);
             adapter.setItemClick(this);
