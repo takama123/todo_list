@@ -3,11 +3,13 @@ package com.example.pc.todo_list.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Calendar;
+
 /**
  * Created by HCD-Fresher057 on 1/11/2017.
  */
 
-public class Mission implements Parcelable{
+public class Mission implements Parcelable {
     int _id;
     String m_ten_nhiem_vu;
     String m_ngay_het_han;
@@ -111,5 +113,36 @@ public class Mission implements Parcelable{
         parcel.writeString(m_gio_het_han);
         parcel.writeInt(m_status);
         parcel.writeInt(m_id_danhsach);
+    }
+
+    public Calendar convertToCalendar() {
+        Calendar calendar = Calendar.getInstance();
+        String dateArray[] = null;
+        String timeArray[] = null;
+        // convert date (string) and time (string)to calendar
+        if(!this.m_ngay_het_han.equalsIgnoreCase("")&&!this.getM_gio_het_han().equalsIgnoreCase("")) {
+            dateArray = getM_ngay_het_han().split("/");
+            timeArray = getM_gio_het_han().split(":");
+        }else if(!this.m_ngay_het_han.equalsIgnoreCase("")&&this.getM_gio_het_han().equalsIgnoreCase("")) {
+            dateArray = getM_ngay_het_han().split("/");
+            timeArray = new String[]{"0","0"};
+        }else{
+            dateArray = new String[] {"0","0","0"};
+            timeArray = new String[]{"0","0"};
+        }
+        int hour_of_day =Integer.parseInt(timeArray[0]);
+
+        calendar.set(Integer.parseInt(dateArray[2]), Integer.parseInt(dateArray[1])-1, Integer.parseInt(dateArray[0]),//date
+                    Integer.parseInt(timeArray[0]), Integer.parseInt(timeArray[1]));//time
+        if(hour_of_day>12){
+            calendar.set(Calendar.AM_PM,0);
+            hour_of_day = hour_of_day - 12;
+            calendar.set(Calendar.HOUR_OF_DAY,hour_of_day);
+        }else{
+            calendar.set(Calendar.AM_PM,1);
+            calendar.set(Calendar.HOUR_OF_DAY,hour_of_day);
+        }
+        calendar.set(Calendar.SECOND,0);
+        return calendar;
     }
 }

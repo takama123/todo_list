@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.example.pc.todo_list.adapter.SpinnerToolbarAdapter;
-import com.example.pc.todo_list.bean.Mission;
 import com.example.pc.todo_list.bean.TypeList;
 import com.example.pc.todo_list.database.MissionDAO;
 import com.example.pc.todo_list.database.TypeListDAO;
@@ -40,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ArrayList<TypeList> arraySpinnerToolBar = new ArrayList<TypeList>();
     SpinnerToolbarAdapter adapterSpinnerToolBar = null;
 
-    ArrayList<Mission> arrayMisson = new ArrayList<Mission>();
 
 
     @Override
@@ -67,14 +65,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        int id_menu = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.add_mission_menu) {
-            return true;
+        switch (id_menu){
+            case R.id.list_type_mission_menu:
+                displayAllTypeLists();
+                break;
+            case R.id.add_mission_menu:
+                addNewTypeList();
+                break;
+            case R.id.setting_menu:
+                Log.d("test","System is setting ...");
+                break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void addNewTypeList() {
+    }
+
+    private void displayAllTypeLists() {
+        Intent intent = new Intent(MainActivity.this,DisplayTypeListActivity.class);
+        startActivity(intent);
     }
 
     public void setWidgetsToobar() {
@@ -110,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Log.d("TEST", "tao moi du lieu");
             TypeList t = new TypeList(1, "Mặc định");
             typeListDAO.addType(t);
-            typeListDAO.addType(new TypeList(2, "Nhiem vu ngay"));
+            typeListDAO.addType(new TypeList(0, "Kết thúc"));
         }
         arraySpinnerToolBar = (ArrayList<TypeList>) typeListDAO.getAllType();
 
@@ -127,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         spinnerToolbar.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                //reload list by type
                 setListMission();
             }
 
@@ -151,20 +165,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void setListMission() {
+
         fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
         // get listMission
         TypeList typeList = ((TypeList) spinnerToolbar.getSelectedItem());
-        arrayMisson = (ArrayList<Mission>) missionDAO.getListMissonByIdTypeList(typeList.getId());
+
         Bundle b = new Bundle();
-        b.putParcelableArrayList("listMission", arrayMisson);
+        b.putInt("id_type_list", typeList.getId());
         b.putString("list_name", typeList.getKieu_danh_sach());
-        //display list mission
+        //
         fr = new ListMissionFragment();
         fr.setArguments(b);
         ft.replace(R.id.frameListMission, fr, "fr1");
         ft.addToBackStack("fr1");
-        Log.d("TEST", "setListMission");
         ft.commit();
     }
 
@@ -174,3 +188,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
     }
 }
+

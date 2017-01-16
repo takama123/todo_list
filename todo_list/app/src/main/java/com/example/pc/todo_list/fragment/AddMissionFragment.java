@@ -24,6 +24,7 @@ import com.example.pc.todo_list.bean.Mission;
 import com.example.pc.todo_list.bean.TypeList;
 import com.example.pc.todo_list.database.MissionDAO;
 import com.example.pc.todo_list.database.TypeListDAO;
+import com.example.pc.todo_list.service.BaoThuc;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -108,6 +109,9 @@ public class AddMissionFragment extends Fragment implements View.OnClickListener
         Mission mission = new Mission(0,_time,id_type,_date,0,_mision);
         long check = missionDAO.addMission(mission);
 
+        // reset alarm
+        new BaoThuc().baothuc(getContext());
+        //display list mission
         Intent intent = new Intent(getContext(), MainActivity.class);
         startActivity(intent);
     }
@@ -131,7 +135,7 @@ public class AddMissionFragment extends Fragment implements View.OnClickListener
 
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                tvTime.setText( selectedHour + ":" + selectedMinute);
+                tvTime.setText( selectedHour + ":" + selectedMinute );
             }
         }, hour, minute, true);//Yes 24 hour time
 
@@ -169,7 +173,5 @@ public class AddMissionFragment extends Fragment implements View.OnClickListener
 
         date.setTitle("Chọn ngày");
         date.show();
-
     }
-
 }

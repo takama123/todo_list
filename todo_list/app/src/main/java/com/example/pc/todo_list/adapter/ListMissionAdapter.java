@@ -24,7 +24,6 @@ public class ListMissionAdapter extends RecyclerView.Adapter<ListMissionAdapter.
     List<Mission> listMission;
     Context context;
     MyItemClick itemClick;
-    int id_mission;
 
     public ListMissionAdapter(Context context, List<Mission> listMission) {
         this.context = context;
@@ -48,11 +47,10 @@ public class ListMissionAdapter extends RecyclerView.Adapter<ListMissionAdapter.
     @Override
     public void onBindViewHolder(ViewHodler holder, int position) {
         Mission mission = listMission.get(position);
-        this.id_mission = mission.get_id();
 
         holder.tvTenNhiemVu.setText(mission.getM_ten_nhiem_vu());
         holder.tvDateTime.setText(mission.getM_gio_het_han() + "  " + mission.getM_ngay_het_han());
-        if(mission.getM_status()==1){
+        if(mission.getM_status()== 1){
             holder.checkBox.setChecked(true);
         }else{
             holder.checkBox.setChecked(false);
@@ -79,14 +77,14 @@ public class ListMissionAdapter extends RecyclerView.Adapter<ListMissionAdapter.
             ln.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    itemClick.layoutClick(id_mission);
+                    itemClick.layoutClick(listMission.get(getLayoutPosition()).get_id());
                 }
             });
 
             checkBox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    itemClick.checkBoxClick(id_mission);
+                    itemClick.checkBoxClick(listMission.get(getLayoutPosition()).get_id());
                 }
             });
         }
@@ -95,6 +93,5 @@ public class ListMissionAdapter extends RecyclerView.Adapter<ListMissionAdapter.
     public interface MyItemClick {
         void checkBoxClick(int id_mission);
         void layoutClick(int id_mission);
-
     }
 }

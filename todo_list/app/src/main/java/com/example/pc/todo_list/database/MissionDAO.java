@@ -17,11 +17,6 @@ import static com.example.pc.todo_list.database.DatabaseHandler.MissionColumn.KE
 import static com.example.pc.todo_list.database.DatabaseHandler.MissionColumn.KEY_TIME;
 import static com.example.pc.todo_list.database.DatabaseHandler.TABLE_MISSION;
 
-
-/**
- * Created by Mac on 1/5/17.
- */
-
 public class MissionDAO {
 
     Context context;
@@ -85,6 +80,27 @@ public class MissionDAO {
         return missionList;
     }
 
+    public List<Mission> getAllMissionExceptFinish() {
+        List<Mission> missionList = new ArrayList<Mission>();
+        // Select All Query
+        SQLiteDatabase db = databaseHandler.getWritableDatabase();
+        Cursor cursor = db.query(TABLE_MISSION, new String[] { DatabaseHandler.MissionColumn._ID,
+                        KEY_NAME, KEY_DATE, KEY_TIME, KEY_ID_LIST, KEY_STATUS }, KEY_ID_LIST + "!=?",
+                new String[] {"2"}, null, null, null, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Mission mission = new Mission(cursor.getInt(0),cursor.getString(3), cursor.getInt(4),
+                        cursor.getString(2), cursor.getInt(5), cursor.getString(1));
+                // Adding contact to list
+                missionList.add(mission);
+            } while (cursor.moveToNext());
+        }
+        // return contact list
+        return missionList;
+    }
+
     public int updateMission(Mission mission) {
         SQLiteDatabase db = databaseHandler.getWritableDatabase();
 
@@ -93,6 +109,7 @@ public class MissionDAO {
         values.put(KEY_DATE, mission.getM_ngay_het_han());
         values.put(KEY_TIME, mission.getM_gio_het_han());
         values.put(KEY_ID_LIST, mission.getM_id_danhsach());
+        values.put(KEY_STATUS, mission.getM_status());
 
         // updating row
         return db.update(TABLE_MISSION, values, DatabaseHandler.MissionColumn._ID + " = ?",
@@ -103,6 +120,13 @@ public class MissionDAO {
         SQLiteDatabase db = databaseHandler.getWritableDatabase();
         db.delete(TABLE_MISSION, DatabaseHandler.MissionColumn._ID + " = ? ",
                 new String[] { String.valueOf(mission.get_id())});
+        db.close();
+    }
+
+    public void deleteMissionByIdType(int id_typelist) {
+        SQLiteDatabase db = databaseHandler.getWritableDatabase();
+        db.delete(TABLE_MISSION, DatabaseHandler.MissionColumn.KEY_ID_LIST + " = ? ",
+                new String[] { String.valueOf(id_typelist)});
         db.close();
     }
 }
