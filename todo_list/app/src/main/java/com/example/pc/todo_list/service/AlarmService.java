@@ -30,6 +30,7 @@ public class AlarmService extends IntentService {
         sendNotification(mission);
         MissionDAO mDao = new MissionDAO(getApplicationContext());
         mission.setM_id_danhsach(2);
+        mission.setM_status(1);
         int i = mDao.updateMission(mission);
         Log.d("test",i+" : result of update"+":"+mission.get_id());
     }

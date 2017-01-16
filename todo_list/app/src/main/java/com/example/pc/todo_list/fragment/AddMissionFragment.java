@@ -110,7 +110,6 @@ public class AddMissionFragment extends Fragment implements View.OnClickListener
         long check = missionDAO.addMission(mission);
 
         // reset alarm
-//        BaoThuc.getInstance().baothuc(getContext());
         new BaoThuc().baothuc(getContext());
         //display list mission
         Intent intent = new Intent(getContext(), MainActivity.class);

@@ -50,7 +50,7 @@ public class ListMissionAdapter extends RecyclerView.Adapter<ListMissionAdapter.
 
         holder.tvTenNhiemVu.setText(mission.getM_ten_nhiem_vu());
         holder.tvDateTime.setText(mission.getM_gio_het_han() + "  " + mission.getM_ngay_het_han());
-        if(mission.getM_status()==1){
+        if(mission.getM_status()== 1){
             holder.checkBox.setChecked(true);
         }else{
             holder.checkBox.setChecked(false);
@@ -77,14 +77,14 @@ public class ListMissionAdapter extends RecyclerView.Adapter<ListMissionAdapter.
             ln.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    itemClick.layoutClick(getLayoutPosition());
+                    itemClick.layoutClick(listMission.get(getLayoutPosition()).get_id());
                 }
             });
 
             checkBox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    itemClick.checkBoxClick(getLayoutPosition());
+                    itemClick.checkBoxClick(listMission.get(getLayoutPosition()).get_id());
                 }
             });
         }
@@ -94,6 +94,4 @@ public class ListMissionAdapter extends RecyclerView.Adapter<ListMissionAdapter.
         void checkBoxClick(int id_mission);
         void layoutClick(int id_mission);
     }
-
-
 }

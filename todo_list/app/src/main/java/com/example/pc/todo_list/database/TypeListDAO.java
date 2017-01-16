@@ -60,16 +60,20 @@ public class TypeListDAO {
 
         SQLiteDatabase db = databaseHandler.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-
+        TypeList ketthuc = null;
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
                 TypeList typeList = new TypeList(cursor.getInt(0),cursor.getString(1));
                 // Adding contact to list
-                allTypeList.add(typeList);
+                if(typeList.getKieu_danh_sach().endsWith("Kết thúc")){
+                    ketthuc = typeList;
+                }else {
+                    allTypeList.add(typeList);
+                }
             } while (cursor.moveToNext());
         }
-
+        if(ketthuc!=null) allTypeList.add(ketthuc);
         // return contact list
         return allTypeList;
     }

@@ -109,6 +109,7 @@ public class MissionDAO {
         values.put(KEY_DATE, mission.getM_ngay_het_han());
         values.put(KEY_TIME, mission.getM_gio_het_han());
         values.put(KEY_ID_LIST, mission.getM_id_danhsach());
+        values.put(KEY_STATUS, mission.getM_status());
 
         // updating row
         return db.update(TABLE_MISSION, values, DatabaseHandler.MissionColumn._ID + " = ?",
@@ -119,6 +120,13 @@ public class MissionDAO {
         SQLiteDatabase db = databaseHandler.getWritableDatabase();
         db.delete(TABLE_MISSION, DatabaseHandler.MissionColumn._ID + " = ? ",
                 new String[] { String.valueOf(mission.get_id())});
+        db.close();
+    }
+
+    public void deleteMissionByIdType(int id_typelist) {
+        SQLiteDatabase db = databaseHandler.getWritableDatabase();
+        db.delete(TABLE_MISSION, DatabaseHandler.MissionColumn.KEY_ID_LIST + " = ? ",
+                new String[] { String.valueOf(id_typelist)});
         db.close();
     }
 }
