@@ -162,17 +162,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // sap xep theo date time
         Collections.sort(arrayMisson,new CompareByDate());
-//        for (Mission m: arrayMisson
-//             ) {
-//            Log.d("test",m.getM_ten_nhiem_vu()+" :: "
-//                    +"month:"+m.convertToCalendar().getTime().getMonth()+" :"
-//                    +"day:"+m.convertToCalendar().getTime().getDate()+" :"
-//                    +"hour:"+m.convertToCalendar().getTime().getHours()+" :"
-//                    +"minute:"+m.convertToCalendar().getTime().getMinutes()+" :"
-//            );
-//
-//        }
-        // display
         Bundle b = new Bundle();
         b.putParcelableArrayList("listMission", arrayMisson);
         b.putString("list_name", typeList.getKieu_danh_sach());
@@ -187,6 +176,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
+
         Intent intent = new Intent(MainActivity.this,MissionActivity.class);
         startActivity(intent);
     }

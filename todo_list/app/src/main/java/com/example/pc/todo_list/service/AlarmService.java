@@ -57,7 +57,8 @@ public class AlarmService extends IntentService {
     @Override
     public void onDestroy() {
         Log.d("test","destroy");
-        BaoThuc.getInstance().baothuc(getApplicationContext());
+//        BaoThuc.getInstance().baothuc(getApplicationContext());
+        new BaoThuc().baothuc(getApplicationContext());
         super.onDestroy();
     }
 }

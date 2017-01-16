@@ -22,20 +22,20 @@ import static android.content.Context.ALARM_SERVICE;
  */
 
 public class BaoThuc {
-    private static BaoThuc instance = null;
+//    private static BaoThuc instance = null;
 
 //    Mission mission;
     private PendingIntent pendingIntent;
 
-    private BaoThuc(){
+    public BaoThuc(){
     }
 
-    public static BaoThuc getInstance(){
-        if(instance == null){
-            instance = new BaoThuc();
-        }
-        return instance;
-    }
+//    public static BaoThuc getInstance(){
+//        if(instance == null){
+//            instance = new BaoThuc();
+//        }
+//        return instance;
+//    }
 
     public void baothuc(Context context) {
         MissionDAO missionDAO = new MissionDAO(context);
@@ -59,13 +59,28 @@ public class BaoThuc {
         //lay thoi gian bao thuc
         Calendar calendar = mission.convertToCalendar();
 
+        in(Calendar.getInstance());
+        in(calendar);
         //set alarm
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
         // tao moi bao thuc
         Intent alertIntent = new Intent(context, AlarmReceiver.class);
         alertIntent.putExtras(bundle);
         pendingIntent = PendingIntent.getBroadcast(context, 1, alertIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
+    }
+    public void in(Calendar c){
+        String s = c.get(Calendar.YEAR)+"-"+
+                c.get(Calendar.MONTH)+"-"+
+                c.get(Calendar.DAY_OF_MONTH)+"-"+
+                c.get(Calendar.HOUR_OF_DAY)+"-"+
+                c.get(Calendar.MINUTE)+"-"+
+                c.get(Calendar.AM_PM)+"-"+
+                c.get(Calendar.SECOND);
+        Log.d("test",s);
+
 
     }
 }

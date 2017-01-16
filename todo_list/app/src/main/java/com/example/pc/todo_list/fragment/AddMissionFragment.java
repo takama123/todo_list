@@ -110,7 +110,8 @@ public class AddMissionFragment extends Fragment implements View.OnClickListener
         long check = missionDAO.addMission(mission);
 
         // reset alarm
-        BaoThuc.getInstance().baothuc(getContext());
+//        BaoThuc.getInstance().baothuc(getContext());
+        new BaoThuc().baothuc(getContext());
         //display list mission
         Intent intent = new Intent(getContext(), MainActivity.class);
         startActivity(intent);
@@ -135,7 +136,7 @@ public class AddMissionFragment extends Fragment implements View.OnClickListener
 
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                tvTime.setText( selectedHour + ":" + selectedMinute);
+                tvTime.setText( selectedHour + ":" + selectedMinute );
             }
         }, hour, minute, true);//Yes 24 hour time
 
@@ -174,6 +175,4 @@ public class AddMissionFragment extends Fragment implements View.OnClickListener
         date.setTitle("Chọn ngày");
         date.show();
     }
-
-
 }
